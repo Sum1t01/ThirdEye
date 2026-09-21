@@ -1,0 +1,52 @@
+# Gradle
+.gradle/
+build/
+**/build/
+!gradle/wrapper/gradle-wrapper.jar
+captures/
+.cxx/
+.externalNativeBuild/
+
+# Kotlin
+.kotlin/
+
+# Local configuration — machine specific, never shared
+local.properties
+
+# Signing material and secrets — a leaked release key cannot be revoked
+*.jks
+*.keystore
+keystore.properties
+secrets.properties
+.env
+
+# Build outputs
+*.apk
+*.aab
+*.ap_
+*.aar
+*.dex
+*.class
+release/
+
+# IntelliJ / Android Studio
+*.iml
+.idea/caches/
+.idea/libraries/
+.idea/modules.xml
+.idea/workspace.xml
+.idea/navEditor.xml
+.idea/assetWizardSettings.xml
+.idea/deploymentTargetSelector.xml
+.idea/deviceManager.xml
+.idea/appInsightsSettings.xml
+.idea/shelf/
+.idea/
+
+# Logs, profiling and crash dumps
+*.log
+*.hprof
+lint-results*.xml
+
+# macOS
+.DS_Store

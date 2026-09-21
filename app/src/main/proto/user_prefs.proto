@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+option java_package = "com.sum1t.thirdeye.datastore";
+option java_multiple_files = true;
+
+message UserPreferences {
+  bool dark_mode = 1;
+  bool onboarding_completed = 2;
+  bool haptics_enabled = 3;
+  string selected_theme_palette = 4;
+}
