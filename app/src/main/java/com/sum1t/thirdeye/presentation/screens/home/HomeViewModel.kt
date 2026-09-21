@@ -19,6 +19,9 @@ sealed class HomeEvent {
     data object StartCamera : HomeEvent()
     data object StopCamera : HomeEvent()
     data object ToggleCamera : HomeEvent()
+
+    /** Text is resolved by the UI so the ViewModel stays free of resources. */
+    data class AnnouncePrompt(val text: String) : HomeEvent()
 }
 
 class HomeViewModel(
@@ -29,10 +32,11 @@ class HomeViewModel(
     private val _uiState = MutableStateFlow(HomeUiState())
     val uiState: StateFlow<HomeUiState> = _uiState.asStateFlow()
 
-    init {
-        // Spoken on entry so the control is discoverable without sight.
-        speaker.speak(HOME_PROMPT)
+    // Guards against re-speaking when the composition restarts, e.g. on
+    // rotation. Once per ViewModel, not once per composition.
+    private var hasAnnouncedPrompt = false
 
+    init {
         viewModelScope.launch {
             volumeKeyEvents.events.collect { key ->
                 when (key) {
@@ -46,15 +50,20 @@ class HomeViewModel(
     fun onEvent(event: HomeEvent) {
         when (event) {
             is HomeEvent.ToggleCamera -> setCameraOn(!_uiState.value.isCameraOn)
+
+            is HomeEvent.AnnouncePrompt -> {
+                // Spoken on entry so the control is discoverable without sight.
+                if (!hasAnnouncedPrompt) {
+                    hasAnnouncedPrompt = true
+                    speaker.speak(event.text)
+                }
+            }
+
             else -> {}
         }
     }
 
     private fun setCameraOn(on: Boolean) {
         _uiState.update { it.copy(isCameraOn = on) }
-    }
-
-    private companion object {
-        const val HOME_PROMPT = "Press volume up to open camera"
     }
 }

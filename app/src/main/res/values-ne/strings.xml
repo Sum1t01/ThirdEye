@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- app_name is deliberately not translated: it is the product name. -->
+
+    <!-- Spoken aloud on entering the home screen, not shown on screen. -->
+    <string name="home_camera_prompt">क्यामेरा खोल्न भोल्युम अप बटन थिच्नुहोस्</string>
+</resources>
